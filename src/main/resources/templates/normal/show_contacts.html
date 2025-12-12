@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="normal/base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8" />
+    <title>Мои контакты</title>
+</head>
+<body>
+<section>
+
+    <div class="card mr-3 ml-3">
+
+        <div class="card-body">
+
+            <!-- Поиск -->
+            <div class="row mb-3">
+
+                <div class="col-md-6">
+                    <form th:action="@{/user/search/0}" method="get" class="form-inline">
+                        <input type="text"
+                               name="keyword"
+                               class="form-control mr-2 mb-2"
+                               placeholder="Поиск по имени, email, телефону, работе..."
+                               th:value="${keyword}">
+                        <button class="btn btn-primary mb-2">Найти</button>
+                    </form>
+                </div>
+
+                <!-- Сортировка + фильтр по email -->
+                <div class="col-md-6">
+                    <form th:action="@{'/user/show-contacts/' + ${currentPage}}" method="get"
+                          class="form-inline justify-content-end">
+
+                        <input type="hidden" name="sortDir" th:value="${sortDir}"/>
+
+                        <div class="btn-group mr-2 mb-2" role="group">
+                            <button type="submit" name="sortField" value="name" class="btn btn-outline-secondary">
+                                По имени
+                            </button>
+                            <button type="submit" name="sortField" value="email" class="btn btn-outline-secondary">
+                                По email
+                            </button>
+                            <button type="submit" name="sortField" value="createdAt" class="btn btn-outline-secondary">
+                                По дате добавления
+                            </button>
+                        </div>
+
+                        <!-- Оставляем только фильтр по email -->
+                        <div class="form-check mr-2 mb-2">
+                            <input class="form-check-input" type="checkbox" name="hasEmail" id="hasEmail"
+                                   th:checked="${hasEmail}">
+                            <label class="form-check-label" for="hasEmail">
+                                Только с email
+                            </label>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+            <h1 class="text-center"
+                th:text="${isSearch} ? 'Результаты поиска' : 'Ваши контакты'">
+                Ваши контакты
+            </h1>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#ID</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Телефон</th>
+                    <th scope="col">Действие</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="c : ${contacts}">
+                    <th scope="row" th:text="${'SCMUSER' + c.cId}">1</th>
+                    <td th:text="${c.name}">Имя</td>
+                    <td th:text="${c.email}">email@example.com</td>
+                    <td th:text="${c.phone}">+7700...</td>
+
+                    <td>
+                        <a th:href="@{'/user/delete/' + ${c.cId}}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Удалить этот контакт?');">
+                            Удалить
+                        </a>
+
+                        <a th:href="@{'/user/update-contact/' + ${c.cId}}"
+                           class="btn btn-primary btn-sm">
+                            Изменить
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- Пагинация (только в обычном режиме, не при поиске) -->
+            <nav aria-label="Навигация по страницам" th:if="${!isSearch}">
+
+                <ul class="pagination">
+
+                    <li th:if="${currentPage != 0}" class="page-item">
+                        <a th:href="@{'/user/show-contacts/' + ${currentPage - 1}}"
+                           class="page-link" href="#">Предыдущая</a>
+                    </li>
+
+                    <li th:each="i : ${#numbers.sequence(1, totalPages)}"
+                        th:classappend="${currentPage == i - 1 ? 'active' : ''}"
+                        class="page-item">
+                        <a th:href="@{'/user/show-contacts/' + ${i - 1}}"
+                           class="page-link" href="#">
+                            <span th:text="${i}"></span>
+                        </a>
+                    </li>
+
+                    <li th:if="${currentPage + 1 != totalPages}" class="page-item">
+                        <a th:href="@{'/user/show-contacts/' + ${currentPage + 1}}"
+                           class="page-link" href="#">Следующая</a>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+</section>
+</body>
+</html>
+
+
+

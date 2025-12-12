@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout(content)">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+          crossorigin="anonymous"/>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+    <title th:text="${title}">Менеджер контактов</title>
+</head>
+<body>
+
+<nav class="fixed-top navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">Менеджер Контактов</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <ul class="navbar-nav ml-auto text-uppercase">
+
+            <li class="nav-item active">
+                <a th:href="@{/}" class="nav-link">Главная</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link">
+                    <span th:text="${user.name}"></span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}">Выйти</a>
+            </li>
+
+        </ul>
+
+    </div>
+</nav>
+
+<div class="sidebar mt-2">
+
+    <span onclick="toggleSidebar()" class="crossBtn">&times;</span>
+
+    <a th:href="@{/user/index}" class="item">
+        <i class="fas fa-home"></i> Главная
+    </a>
+
+    <a th:href="@{/user/show-contacts/0}" class="item">
+        <i class="fas fa-id-card-alt"></i> Просмотр контактов
+    </a>
+
+    <a th:href="@{/user/add-contact}" class="item">
+        <i class="fas fa-pencil-alt"></i> Добавить контакт
+    </a>
+
+    <a th:href="@{/user/profile}" class="item">
+        <i class="fas fa-user-circle"></i> Профиль
+    </a>
+
+    <a th:href="@{/user/settings}" class="item">
+        <i class="fas fa-cogs"></i> Настройки
+    </a>
+
+    <a th:href="@{/logout}" class="item">
+        <i class="fas fa-sign-out-alt"></i> Выйти
+    </a>
+
+    <div class="divider"></div>
+
+</div>
+
+<div class="content mt-5">
+
+    <i onclick="toggleSidebar()" class="fas fa-bars m-3"></i>
+
+    <div th:if="${session.message}" class="container">
+
+        <div th:classappend="${'alert-'+session.message.type}"
+             class="alert text-center">
+
+            <span th:text="${session.message.content}"></span>
+        </div>
+
+        <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+
+    </div>
+
+    <div th:replace="${content}"></div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>
+
+

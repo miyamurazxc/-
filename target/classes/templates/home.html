@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8" />
+    <title>Главная страница</title>
+</head>
+<body>
+<section class="banner d-flex justify-content-center align-items-center ">
+    <div class="text-center">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h1 class="font-weight-bold">Менеджер Контактов</h1>
+        <p>
+            Начните сохранять свои контакты удобным и современным способом.
+            Я предоставляю эффективный и простой инструмент для управления контактами.
+        </p>
+        <a th:href="@{/signin}" class="btn bg-primary btn-lg text-white">
+            Начать работу
+        </a>
+    </div>
+</section>
+</body>
+</html>
