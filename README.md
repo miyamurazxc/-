@@ -78,7 +78,10 @@ Maven
 - `user_id` — внешний ключ на `USER`
 
 - ## Структура проекта
-- contactmanager/
+## Структура проекта
+
+```text
+contactmanager/
 ├─ src/                                           ← исходники проекта
 │  ├─ main/                                       ← основной код приложения
 │  │  ├─ java/com/smart/                           ← Java-код (backend)
@@ -120,4 +123,6 @@ Maven
 │  │     └─ application.properties                 ← настройки: подключение к БД, JPA, порт и т.д.
 ├─ pom.xml                                        ← Maven: зависимости (Spring Boot, JPA, Security, MySQL)
 └─ README.md                                      ← описание проекта, запуск, структура, возможности
+```
+
 
